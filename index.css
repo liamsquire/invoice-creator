@@ -119,10 +119,8 @@ table tbody td {
 /*
 MODAL WINDOW
 */
-/* Modal background) */
-#myModal {
 
-}
+/* Modal background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
