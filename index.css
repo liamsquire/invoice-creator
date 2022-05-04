@@ -9,21 +9,6 @@ body {
     color: #fff;
     box-sizing:border-box;
     }
-/* @media(max-width: 499px ) {
-    #invoice-container {
-        min-width:500px;
-        max-width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
-@media(min-width: 500px ) {
-    #invoice-container {
-        min-width: 300px;
-        max-width: 500px;
-    }
-} */
 
 /*
 INVOICE HEADER
