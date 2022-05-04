@@ -13,6 +13,8 @@ let hasWashCar = false
 let hasMowLawn = false
 let hasPullWeeds = false
 
+let tasksSelected = [] //Services stored in an array should it be required.
+
 let total = 0
 
 //Wash Car Feature
@@ -25,6 +27,8 @@ btnCarWashEl.addEventListener("click", function() {
 </tr>`
     hasWashCar = true
     total += 10
+    tasksSelected.push("Wash Car")
+    console.log(tasksSelected)
     btnCarWashEl.classList.add("active")
     totalAmountEl.textContent = "$" + total
     }
@@ -37,8 +41,9 @@ btnCarWashEl.addEventListener("click", function() {
 function removeWashCar() {
     if (hasWashCar === true) {
         let removeWashCarEl = document.getElementById("remove-wash-car")
-        total -= 10
+        total -= washCarPrice
         hasWashCar = false
+        removeItemFromArray("Wash Car")
         btnCarWashEl.classList.remove("active")
         totalAmountEl.textContent = "$" + total
         return removeWashCarEl.parentNode.removeChild(removeWashCarEl)
@@ -55,6 +60,8 @@ btnMowLawnEl.addEventListener("click", function() {
 </tr>`
     hasMowLawn = true
     total += 20
+    tasksSelected.push("Mow Lawn")
+    console.log(tasksSelected)
     btnMowLawnEl.classList.add("active")
     totalAmountEl.textContent = "$" + total
     }
@@ -66,8 +73,9 @@ btnMowLawnEl.addEventListener("click", function() {
 function removeMowLawn() {
     if (hasMowLawn === true) {
         let removeMowLawnEl = document.getElementById("remove-mow-lawn")
-        total -= 20
+        total -= mowLawnPrice
         hasMowLawn = false
+        removeItemFromArray("Mow Lawn")
         btnMowLawnEl.classList.remove("active")
         totalAmountEl.textContent = "$" + total
         return removeMowLawnEl.parentNode.removeChild(removeMowLawnEl)
@@ -83,7 +91,9 @@ btnPullWeedsEl.addEventListener("click", function() {
     <td>$30</td>
 </tr>`
     hasPullWeeds = true
-    total += 30
+    total += pullWeedsPrice
+    tasksSelected.push("Pull Weeds")
+    console.log(tasksSelected)
     btnPullWeedsEl.classList.add("active")
     totalAmountEl.textContent = "$" + total
     }
@@ -97,17 +107,26 @@ function removePullWeeds() {
         let removePullWeedsEl = document.getElementById("remove-pull-weeds")
         total -= 30
         hasPullWeeds = false
+        removeItemFromArray("Pull Weeds")
         btnPullWeedsEl.classList.remove("active")
         totalAmountEl.textContent = "$" + total
         return removePullWeedsEl.parentNode.removeChild(removePullWeedsEl)
     }
 }
 
-/*Reusable function*/
+/*Reusable functions*/
 function removeElement(id) {
     var elem = document.getElementById(id);
     return elem.parentNode.removeChild(elem);
 }
+
+function removeItemFromArray(element) {
+    let taskIndex = tasksSelected.indexOf(element)
+        if (taskIndex !== -1) {
+            tasksSelected.splice(taskIndex, 1);
+        }
+        console.log(tasksSelected)
+    }
 
 //Send Invoice Feature
 
@@ -130,6 +149,7 @@ btnSendInvoiceEl.addEventListener("click", function() {
     <p><strong>Date:</strong> ${today}</p>
     <hr>
     <h3>Order</h3>
+    <p>Services ordered: ${tasksSelected.length}</p>
     `
     if (hasWashCar) {
         messageDetail += `<p>Wash Car ($${washCarPrice})</p>` 
@@ -140,7 +160,7 @@ btnSendInvoiceEl.addEventListener("click", function() {
     if (hasPullWeeds) {
         messageDetail += `<p>Pull Weeds ($${pullWeedsPrice})</p>` 
     }
-    messageDetail += `<h3>Total</h3><p id="messageTotal">$${total}</p>`
+    messageDetail += `<hr><h3>Total</h3><p id="messageTotal">$${total}</p>`
     modalMessageEl.innerHTML = messageDetail
 })
 
